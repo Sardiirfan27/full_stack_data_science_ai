@@ -1,0 +1,229 @@
+# version: '3.8'
+
+# ==========================
+# Shared configs / anchors
+# ==========================
+x-airflow-image: &airflow-image apache/airflow:2.7.1-python3.11
+x-postgres-image: &postgres-image postgres:16
+x-redis-image: &redis-image redis:7
+
+x-common-service: &common
+  # image: *airflow-image
+  build: ./docker/airflow
+  env_file:
+    - .env
+  volumes:
+    - ./airflow/dags:/opt/airflow/dags
+    - ./airflow/logs:/opt/airflow/logs
+    # Mount the entire root, including .env, etl folder, ml floder, etc, to /opt/project
+    # Without this mount, Airflow's Python interpreter will not be able to import local modules
+    # (e.g. etl_to_bigquery, ml.promote_model), causing "ModuleNotFoundError" in DAGs.
+    - ./:/opt/project/
+    
+  user: "${AIRFLOW_UID}:${AIRFLOW_GID:-50000}"
+  networks:
+      - project_network
+
+
+services:
+  # --------------------------
+  # PostgreSQL
+  # --------------------------
+  postgres_airflow: # host postgres
+    image: *postgres-image
+    container_name: pg_airflow
+    ports:
+      - "5434:5432" # host port : container port
+    volumes:
+      #- ./db/data:/var/lib/postgresql/data
+      - postgres_airflow_data:/var/lib/postgresql/data
+      - ./db/init.sql:/docker-entrypoint-initdb.d/init.sql
+    environment:
+      POSTGRES_USER: ${AIRFLOW_POSTGRES_USER}
+      POSTGRES_PASSWORD: ${AIRFLOW_POSTGRES_PASSWORD}
+      POSTGRES_DB: ${AIRFLOW_POSTGRES_DB}
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${AIRFLOW_POSTGRES_USER}"]
+      interval: 5s
+      timeout: 3s
+      retries: 9
+    networks:
+    - project_network  
+ 
+  postgres_mlflow: # host postgres for mlflow
+    image: *postgres-image
+    container_name: pg_mlflow
+    ports:
+      - "5435:${MLFLOW_POSTGRES_PORT}"
+    volumes:
+      #- ./db/data:/var/lib/postgresql/data
+      - postgres_mlflow_data:/var/lib/postgresql/data
+
+    environment:
+      POSTGRES_USER: mlflow_user
+      POSTGRES_PASSWORD: mlflow_pass
+      POSTGRES_DB: mlflow_db
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U mlflow_user"]
+      interval: 5s
+      timeout: 3s
+      retries: 9
+    networks:
+    - project_network  
+
+  # --------------------------
+  # Redis (Celery Broker)
+  # --------------------------
+  redis:  
+    image: *redis-image
+    container_name: redis
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+    networks:
+    - project_network
+
+  # --------------------------
+  # Airflow init
+  # --------------------------
+  airflow-init:
+    <<: *common
+    # Must run as root (0:0) to ensure file and folder permissions
+    user: "0:0"
+    container_name: airflow_init
+    depends_on:
+      postgres_airflow:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    entrypoint: /bin/bash
+    # command:
+    #   - -c
+    #   - |
+    #     mkdir -p /sources/logs /sources/dags /sources/plugins
+    #     chown -R "${AIRFLOW_UID}:0" /sources/{logs,dags,plugins} # All folders and files will be owned by user 50000 and group 0
+
+  # --------------------------
+  # Airflow Scheduler
+  # --------------------------
+  airflow-scheduler:
+    <<: *common
+    container_name: airflow_scheduler
+    restart: unless-stopped
+    depends_on:
+      postgres_airflow:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    command: scheduler
+
+  # --------------------------
+  # Airflow Webserver
+  # --------------------------
+  airflow-webserver:
+    <<: *common
+    container_name: airflow_webserver
+    restart: unless-stopped
+    depends_on:
+      postgres_airflow:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+      airflow-scheduler:
+        condition: service_started
+    ports:
+      - "8080:8080"
+    # command: > 
+    #   bash -c "airflow webserver"
+    command: webserver
+
+  # --------------------------
+  # Airflow Worker
+  # --------------------------
+  airflow-worker:
+    <<: *common
+    container_name: airflow_worker
+    restart: unless-stopped
+    depends_on:
+      postgres_airflow:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+      airflow-scheduler:
+        condition: service_started
+    # command: >
+    #   bash -c "airflow celery worker"
+    command: celery worker
+  
+  # --------------------------
+  # Mlflow Server
+  # --------------------------
+  mlflow:
+    build: ./docker/mflow
+      # context: .               
+         # root project
+      # dockerfile: docker/mflow/Dockerfile
+    image: mlflow_server
+    container_name: mlflow_ui
+    env_file:
+      - .env
+    volumes:
+      - ./mlflow_runs:/opt/project/mlflow_runs
+    ports:
+      - "${MLFLOW_PORT}:${MLFLOW_PORT}"
+    depends_on:
+      postgres_mlflow:
+        condition: service_healthy
+    command: >
+      mlflow server
+      --host 0.0.0.0
+      --port 5000
+      --backend-store-uri postgresql://mlflow_user:mlflow_pass@postgres_mlflow:5432/mlflow_db
+      --default-artifact-root /opt/project/mlflow_runs
+      --allowed-hosts "*"
+      --cors-allowed-origins "*"
+#  --allowed-hosts "mlflow.internal:5000,localhost:*"
+    networks:
+      - project_network
+
+  # =====================================
+  # FastAPI (inference)
+  # =====================================
+  fastapi:
+    build: 
+      context: .             
+      dockerfile: docker/fastapi/Dockerfile
+    container_name: fastapi_inference
+    depends_on:
+      mlflow:
+        condition: service_started
+      redis:
+        condition: service_healthy
+    ports:
+      - "8000:8000"
+    env_file:
+      - .env
+    volumes:
+      - ./fastapi_app:/app
+      - ./mlflow_runs:/opt/project/mlflow_runs
+    command: uvicorn main:app --host 0.0.0.0 --port 8000 --reload
+    networks:
+      - project_network
+  
+
+volumes:
+  postgres_airflow_data:
+  postgres_mlflow_data:
+  redis_data:
+
+networks:
+  project_network:
+    external: true
+
+

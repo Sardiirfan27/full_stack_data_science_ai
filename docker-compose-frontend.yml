@@ -1,0 +1,23 @@
+# version: "3.8"
+
+services:
+  streamlit:
+    build: 
+      context: .
+      dockerfile: ./docker/streamlit/Dockerfile
+    container_name: streamlit_app
+    ports:
+      - "8501:8501"
+    env_file:
+      - ./web_app/.env
+    # networks:
+    #   - project_network
+    volumes:
+      - ./web_app:/app
+    command: streamlit run app.py --server.port 8501 --server.address 0.0.0.0 --server.runOnSave true
+    networks:
+      - project_network
+
+networks:
+  project_network:
+    external: true

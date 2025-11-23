@@ -1,0 +1,6 @@
+tenure,TotalCharges,MonthlyCharges,Contract,OnlineSecurity,TechSupport,InternetService,PaymentMethod,OnlineBackup,DeviceProtection,StreamingMovies,StreamingTV,PaperlessBilling,Dependents,Partner,SeniorCitizen
+10,659.65,70.1,Month-to-month,No,No,Fiber optic,Electronic check,No,No,No,No,Yes,No,Yes,0
+30,3121.1,104.1,Month-to-month,No,No,Fiber optic,Electronic check,Yes,Yes,Yes,Yes,Yes,No,No,1
+4,333.6,76.65,Month-to-month,No,No,Fiber optic,Bank transfer (automatic),Yes,No,No,No,Yes,No,No,0
+19,1394.55,69.6,Month-to-month,No,No,DSL,Mailed check,No,No,Yes,Yes,No,No,No,0
+38,743.05,20.3,Two year,No internet service,No internet service,No,Mailed check,No internet service,No internet service,No internet service,No internet service,No,No,No,0

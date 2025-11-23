@@ -1,0 +1,25 @@
+numpy==1.26.4
+scikit-learn==1.2.2
+imbalanced-learn==0.12.2
+xgboost==2.0.3
+shap==0.44.1
+scikit-optimize==0.9.0
+# mlflow==3.5.0
+numpy==1.26.4
+pandas==2.2.1
+statsmodels==0.14.1
+scipy==1.11.4
+seaborn==0.12.2
+matplotlib==3.7.5
+plotly==5.18.0
+# uvicorn>=0.31.1,<1 # ASGI server for running FastAPI or other Python web apps
+python-dotenv>=1.1.0,<2 # Load environment variables from .env files
+
+#etl & db
+#sqlalchemy==2.0.43 # "This version conflicts with the SQLAlchemy version in Airflow, so it doesn't need to be installed.
+google-cloud-storage==2.11.0 # GCS integration (optional if storing files in cloud)
+google-cloud-bigquery==3.38.0
+google-cloud-bigquery[bqstorage,pandas]==3.38.0
+
+#psycopg2-binary==2.9.10 # "To avoid a version conflict with Airflow's psycopg2 dependency, this package should not be installed.
+# apache-airflow[celery]==3.1.0

@@ -1,0 +1,30 @@
+# Ignore Python virtual environment
+.venv/
+**/.venv/
+
+# Ignore all logs folders
+logs/
+**/logs/
+
+# Ignore all __pycache__ folders
+__pycache__/
+**/__pycache__/
+
+# Ignore db/data folder
+db/data/
+
+# Ignore system files
+.DS_Store
+
+.github/
+.git/
+
+# Ignore all gcp_service_key.json files anywhere
+**/gcp_service_key.json
+
+# Ignore mlflow runs folder
+mlflow_runs/
+**/mlflow_runs/
+
+#ignore chromadb persistent folder
+web_app/chromadb_telco/
