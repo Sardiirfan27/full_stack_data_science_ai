@@ -1,0 +1,103 @@
+{
+  "judul": "Informasi Layanan Telco untuk Pelanggan",
+  "deskripsi": "Layanan internet, layanan tambahan, paket harga, dan kontrak dengan penyesuaian biaya otomatis berdasarkan add-on dan durasi kontrak.",
+
+  "aturan_biaya": {
+    "biaya_addon_usd": 10,
+    "diskon_kontrak": {
+      "one_year": 0.05,
+      "two_year": 0.10
+    }
+  },
+
+  "layanan_internet": [
+    {
+      "nama": "DSL",
+      "kecepatan_mbps": "25–50 Mbps"
+    },
+    {
+      "nama": "Fiber optic",
+      "kecepatan_mbps": "100–1000 Mbps"
+    },
+    {
+      "nama": "No internet service",
+      "kecepatan_mbps": "0 Mbps"
+    }
+  ],
+
+  "layanan_tambahan": [
+    "Online security",
+    "Online backup",
+    "Device protection",
+    "Tech support",
+    "Streaming TV",
+    "Streaming movies"
+  ],
+
+  "paket_dan_biaya": [
+    {
+      "nama_paket": "Basic DSL",
+      "internet": "DSL",
+      "kecepatan_mbps": "25–50 Mbps",
+      "biaya_dasar_usd": 45.00,
+      "contoh_perhitungan": {
+        "addons": ["Online security", "Tech support"],
+        "total_addon": 2,
+        "biaya_addon_usd": 20,
+        "biaya_before_discount": 65.00,
+        "biaya_final_usd": {
+          "month_to_month": 65.00,
+          "one_year": 61.75,
+          "two_year": 58.50
+        }
+      }
+    },
+    {
+      "nama_paket": "Standard Fiber",
+      "internet": "Fiber optic",
+      "kecepatan_mbps": "100–300 Mbps",
+      "biaya_dasar_usd": 70.00,
+      "contoh_perhitungan": {
+        "addons": ["Streaming TV"],
+        "total_addon": 1,
+        "biaya_addon_usd": 10,
+        "biaya_before_discount": 80.00,
+        "biaya_final_usd": {
+          "month_to_month": 80.00,
+          "one_year": 76.00,
+          "two_year": 72.00
+        }
+      }
+    },
+    {
+      "nama_paket": "Premium Fiber",
+      "internet": "Fiber optic",
+      "kecepatan_mbps": "500–1000 Mbps",
+      "biaya_dasar_usd": 95.00,
+      "contoh_perhitungan": {
+        "addons": ["Streaming TV", "Device protection", "Online security"],
+        "total_addon": 3,
+        "biaya_addon_usd": 30,
+        "biaya_before_discount": 125.00,
+        "biaya_final_usd": {
+          "month_to_month": 125.00,
+          "one_year": 118.75,
+          "two_year": 112.50
+        }
+      }
+    }
+  ],
+
+  "kontrak": [
+    "Month-to-month",
+    "One year",
+    "Two year"
+  ],
+
+  "metode_pembayaran": [
+    "Electronic check",
+    "Mailed check",
+    "Bank transfer (automatic)",
+    "Credit card (automatic)"
+  ]
+}

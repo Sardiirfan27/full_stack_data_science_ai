@@ -1,0 +1,204 @@
+/* Root Variables */
+:root {
+    --primary-gradient: linear-gradient(135deg, #00B4DB 0%, #0083B0 100%);
+    --secondary-gradient: linear-gradient(135deg, #2D2D2D 0%, #1E1E1E 100%);
+    --accent-color: #00B4DB;
+    --bg-dark: #1E1E1E;
+    --bg-darker: #171717;
+    --bg-light: #2D2D2D;
+    --text-primary: #E0E0E0;
+    --text-secondary: #B0B0B0;
+    --border-color: #3D3D3D;
+    --success-color: #4CAF50;
+    --warning-color: #FFA726;
+    --error-color: #F44336;
+}
+
+/*====STREAMLIT SIDEBAR CUSTOM STYLE===*/
+/* Styling sidebar */
+section[data-testid="stSidebar"] {
+    background-color: #1E293B;
+    color: #fff;
+}
+
+/* Styling tombol sidebar */
+div.stButton > button {
+    background: var(--primary-gradient);
+    color: white;
+    border: none;
+    padding: 1rem 1.8rem; 
+    border-radius: 10px;  
+    font-size: 1.05rem;   
+    font-weight: 600;
+    transition: all 0.2s ease;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    
+}
+
+/* Hover dan active */
+div.stButton > button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(0, 180, 219, 0.4);
+}
+
+/* Metrics */
+/* ===== Metric Card Wrapper ===== */
+div[data-testid="stMetric"] {
+    background: linear-gradient(135deg, #00ffff,#0077ff);
+    padding: 18px 14px;
+    border-radius: 14px;
+    border: 1px solid rgba(0, 0, 0, 0.558);
+    backdrop-filter: blur(6px);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.25);
+    transition: 0.3s;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;   /* horizontal center */
+    justify-content: center !important; /* vertical center */
+    text-align: center !important; 
+}
+
+/* Hover effect */
+div[data-testid="stMetric"]:hover {
+    transform: translateY(-4px);
+    box-shadow: 4px 10px 15px #00FFFF;
+}
+
+/* Label */
+div[data-testid="stMetric"] > label {
+    font-size: 15px;
+    color: #dadada !important;
+    font-weight: 500;
+   
+}
+
+/* ===== Container ===== */
+.st-key-container_dashboard_1 {
+        border: 2px solid #00FFFF;
+        padding: 15px;
+        border-radius: 10px;
+        background-color: #1E293B;
+        margin-top: 20px;   
+}
+.st-key-container_dashboard_2 {
+        border: 2px solid #00FFFF;
+        padding: 15px;
+        border-radius: 10px;
+        background-color: #1E293B;
+        /* margin-top: 20px;  */
+    }
+
+/*=== STREAMLIT TABS CUSTOM STYLE ===*/
+/* Wrapper untuk tab list */
+div[data-baseweb="tab-list"] {
+    /* background-color: white !important; */
+    padding: 8px;
+    border-radius: 10px;
+    /* border: 1px solid rgba(255,255,255,0.1); */
+}
+
+/* Semua tab */
+button[data-baseweb="tab"] {
+    padding: 10px 30px !important;        /* klik area lebih besar */
+    color: #ffffff !important;               /* text normal */
+    border-radius: 8px !important;
+    background-color: transparent !important;
+    /* border: none !important; */
+    transition: 0.2s ease-in-out;
+}
+
+/* Hanya font untuk teks (p) */
+button[data-baseweb="tab"] p {
+    font-size: 20px !important; 
+    font-weight: 400 !important;
+    color: #ffffff !important;
+    margin: 0 !important;
+    padding: 0 !important;
+}
+/* Tab aktif (yang dipilih) */
+button[data-baseweb="tab"][aria-selected="true"] {
+    font-weight: 1000 !important;           /* bold */
+    color:  white !important;             /* hijau */
+    background: var(--primary-gradient) !important;  /* hijau muda */
+    border-bottom: 3px solid #00FFFF  !important;
+}
+
+/* p pada tab aktif → bold */
+button[data-baseweb="tab"][aria-selected="true"] p {
+    font-weight: 800 !important;
+}
+
+
+/* ================================
+   STREAMLIT MULTISELECT CUSTOM
+   ================================ */
+
+/* Wrapper multiselect */
+div[data-testid="stMultiSelect"] div[data-testid="stMarkdownContainer"] p {
+    font-size: 15px !important;       /* text lebih besar */
+    color: #ffffff !important;        /* putih untuk dark mode */
+    font-weight: 500 !important;      /* medium */
+    margin: 0 !important;
+    padding: 0 !important;
+}
+
+/* Selected items (tags/chips) */
+div[data-testid="stMultiSelect"] span[data-baseweb="tag"] {
+    background: var(--primary-gradient) !important;  
+    color: #ffffff !important;             /* text putih */
+    font-weight: 600 !important;           /* bold */
+}
+
+
+/* ====STREAMLIT Chat Message Content === */
+/* Tampilan user message */
+div.stChatMessage.st-emotion-cache-1mph9ef {
+    background-color: #1f80aa; /* biru cerah */
+    color: white;
+    line-height: 1.5;
+    padding: 20px 20px;
+    border-radius: 0px 20px 0px 20px;  /* lancip kiri atas, bulat kanan atas & bawah */ /* lancip di atas kiri */
+    max-width: 70%; /* agar tidak full lebar */
+    margin-right: 2rem; /* beri jarak dari kiri layar */
+    margin-bottom: 8px;
+}
+
+/* Tampilan AI / assistant */
+div.stChatMessage.st-emotion-cache-1iitq1e {
+    background-color: #2D2D2D; /* gelap */
+    color: #E0E0E0;
+    line-height: 1.5;
+    padding: 20px 20px;
+    border-radius: 25px 0 30px 0px; /* bulat di sisi kiri */
+    max-width: 70%;
+    /*align-self: flex-start;*/ /* posisinya di kiri */
+    margin-left: 20px; /* beri jarak dari kiri layar */
+    margin-bottom: 8px;
+}
+
+/* Target semua image di dalam chat bubble tertentu */
+div.stChatMessage.st-emotion-cache-1mph9ef img {
+    width: 40px;   /* atur lebar sesuai kebutuhan */
+    height: auto;   /* pertahankan aspect ratio */
+    border-radius: 10px; /* opsional, biar bulat sedikit */
+}
+
+/* Target semua image di dalam chat bubble tertentu */
+div.stChatMessage.st-emotion-cache-1iitq1e img {
+    width: 50px;   /* atur lebar sesuai kebutuhan */
+    height: 50px;   /* pertahankan aspect ratio */
+    border-radius: 50%; /* membuat bulat */
+    object-fit: cover;  /* agar proporsional dan tidak terdistorsi */
+}
+
+/*atur ukuran font di chat bubble*/
+div.stChatMessage.st-emotion-cache-1mph9ef p {
+    font-size: 20px;
+}
+div.st-emotion-cache-1o77jex {
+    font-size: 20px;
+}
+div.stChatMessage.st-emotion-cache-1iitq1e p {
+    font-size: 20px;
+}
