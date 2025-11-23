@@ -27,4 +27,4 @@ mlflow_runs/
 **/mlflow_runs/
 
 #ignore chromadb persistent folder
-web_app/chromadb_telco/
+# web_app/chromadb_telco/
