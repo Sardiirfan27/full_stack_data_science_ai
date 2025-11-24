@@ -7,8 +7,7 @@
 
 Project ini dibuat untuk **mensimulasikan Full Stack Data Science dan AI** pada domain **Industri telekomunikasi**, mulai dari:
 
-* Membangun database dan Data Warehouse
-* ETL
+* Membangun database, Data Warehouse dan Proses ETL
 * Churn Prediction and Analysis:
    * Exploratory Data Analysis
    * Data Preprocessing & Feature Engineering
