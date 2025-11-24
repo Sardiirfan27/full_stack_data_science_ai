@@ -16,11 +16,15 @@ Project ini dibuat untuk **mensimulasikan Full Stack Data Science dan AI** pada 
    * Explainable AI (SHAP)
 * MLOps
 * Otomatisasi ETL dan MLOps
-* Pembuatan API untuk Model Inference yang di lengkapi dengan Input Validation, API Key dan Rate Limit untuk keamanan dan menjaga performa server, dan Caching untuk mempercepat proses prediksi.
+* Pembuatan API untuk Model Inference yang di lengkapi dengan:
+  * Input Validation,
+  * API Key dan Rate Limit untuk keamanan dan menjaga performa server
+  * Caching untuk mempercepat proses prediksi.
 * Web App:
   *   Dashboard dan Otomatisasi Pembuatan Chart dan Insight dengan LLM/Generative AI
   *   Prediksi Churn berdasarkan input manual dan file CSV
-  *   AI Chatbot dengan RAG untuk memberikan informasi paket internet dan harganya. 
+  *   AI Chatbot dengan RAG untuk memberikan informasi paket internet dan harganya.
+* Model Deployment (Optional): Model yang telah selesai di training di simpan ke Google Cloud Storage, kemudian Deploy API dan Web App ke Google Cloud Run.
 
 Dataset utama berasal dari [Kaggle](https://www.kaggle.com/code/sardiirfansyah/customer-churn-prediction-analysis), kemudian ditambah dengan beberapa tabel dummy untuk menyerupai kondisi real industri telekomunikasi.
 
