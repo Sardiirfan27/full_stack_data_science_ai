@@ -18,9 +18,9 @@ Project ini dibuat untuk **mensimulasikan Full Stack Data Science dan AI** pada 
 * Otomatisasi ETL dan MLOps
 * API untuk inference
 * Web App:
-*   Dashboard dan Otomatisasi Pembuatan Chart dan Insight dengan LLM/Generative AI
-*   Prediksi Churn berdasarkan input manual dan file CSV
-*   AI Chatbot dengan RAG untuk memberikan informasi paket internet dan harganya. 
+  *   Dashboard dan Otomatisasi Pembuatan Chart dan Insight dengan LLM/Generative AI
+  *   Prediksi Churn berdasarkan input manual dan file CSV
+  *   AI Chatbot dengan RAG untuk memberikan informasi paket internet dan harganya. 
 
 Dataset utama berasal dari [Kaggle](https://www.kaggle.com/code/sardiirfansyah/customer-churn-prediction-analysis), kemudian ditambah dengan beberapa tabel dummy untuk menyerupai kondisi real industri telekomunikasi.
 
