@@ -26,9 +26,8 @@ Project ini dibuat untuk **mensimulasikan Full Stack Data Science dan AI** pada 
   *   AI Chatbot dengan RAG untuk memberikan informasi paket internet dan harganya.
 * Model Deployment (Optional): Model yang telah selesai di training di simpan ke Google Cloud Storage, kemudian Deploy API dan Web App ke Google Cloud Run.
 
-Dataset utama berasal dari [Kaggle](https://www.kaggle.com/code/sardiirfansyah/customer-churn-prediction-analysis), kemudian ditambah dengan beberapa tabel dummy untuk menyerupai kondisi real industri telekomunikasi.
 
-Demo aplikasi dan Penjelasannya dapat di akses atau klik pada tautaan berikut: [Demo Aplikasi Data Science/AI](https://www.youtube.com/watch?v=FD1qKWHBNN8)
+>**Demo aplikasi** dan Penjelasannya dapat di akses atau klik pada tautaan berikut: [Demo Aplikasi Data Science/AI](https://www.youtube.com/watch?v=FD1qKWHBNN8)
 
 ---
 
