@@ -42,7 +42,7 @@ Dataset utama berasal dari [Kaggle](https://www.kaggle.com/code/sardiirfansyah/c
 | Bagian                                     | Deskripsi                                                                                                                                                                                                                                                                                                                                                                                                                                                | Tech Stack / Tools                              |
 | ------------------------------------------ | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------- |
 | **Database Design (RDBMS)**                        | - Mendesain schema database Telco (customer, contract and internet service, transaction) <br> - Membuat *view churn* dengan aturan: **pelanggan dianggap churn jika tidak melakukan pembayaran selama ≥ 2 bulan** <br>                                                                                                                                                        | Docker, PostgreSQL                                 |
-| **ETL Pipeline**                           | - Extract data dari PostgreSQL <br> - Transform: join tabel, cleaning, data quality check, pengayaan fitur (tenure, payment delay, service type) <br> - Load ke BigQuery sebagai Data Warehouse <br> - Dirancang modular & reusable                                                                                                                                                                                                                      | Python, pandas, BigQuery, PostgreSQL              |
+| **ETL Pipeline**                           | - Extract data dari PostgreSQL <br> - Transform: join tabel, cleaning, data quality check, pengayaan fitur (tenure, payment delay, service type) <br> - Load ke BigQuery sebagai Data Warehouse <br> - Dirancang modular & reusable                                                                                                                                                                                                                      | Python, pandas, BigQuery, Postgres              |
 | **Data Warehouse**                         | - Mengintegrasikan dataset Kaggle dengan data hasil ETL PostgreSQL <br> - Membuat data mart atau tabel untuk keperluan ML & dashboard analitik                                                             | BigQuery                                        |
 | **Orkestrasi (Otomatisasi & Penjadwalan)** | - ETL dijalankan otomatis **setiap 3 bulan** <br> - Setelah ETL selesai, sistem otomatis melakukan: <br> → Preprocessing <br> → Training machine learning model + Hyperparameter tuning <br> → Evaluasi dan promosikan model ke Production (jika **recall** >= 0.8 dan **F1-Score**>=0.6) <br> - Menjalankan pipeline ML end-to-end secara otomatis                                                                                                                         | Airflow, Bash, Python                    |
 | **EDA & Machine Learning (Jupyter Notebook)**                 | - Analisis churn: distribusi, service usage, contract terms, billing patterns, tenure, etc. <br> - Preprocessing pipeline: cleaning, encoding, scaling, feature engineering. <br> - Model training menggunakan **XGBoost** <br> - Hyperparameter Tuning: **Bayesian Optimization** + Grid Search <br> - Evaluasi model: precision, recall, F1, Custom Metric <br> - **Explainable AI**: **SHAP**, Permutation Feature Importance | Python, scikit-learn, XGBoost, SHAP, pandas, matplotlib, seaborn, plotly, scipy, numy, statsmodels |
@@ -170,19 +170,19 @@ GEMINI_API_KEY=your_gemini_key
 
 ---
 
-## 4️⃣ Jalankan Script untuk Pembuatan Database dan tabel di BigQuery
+## 5️⃣ Jalankan Script untuk Pembuatan Database dan tabel di BigQuery
 
 Sebelum menjalankan docker compose, jalankanlah script berikut untuk membuat db dan table di BigQuery. 
 
 Copy file `gcp_service_key.json` ke folder `db` dan  jalankan script `create_db_bigquery.py`.
 
-## 5️⃣ Jalankan Backend (ETL, MLOps, API, Database)
+## 6️⃣ Jalankan Backend (ETL, MLOps, API, Database)
 
 Berikut versi yang sudah **dirapikan, lebih rapi, dan mudah dibaca** untuk bagian menjalankan backend di README:
 
 ---
 
-## 5️⃣ Jalankan Backend (ETL, MLOps, API, Database)
+## 7️⃣ Jalankan Backend (ETL, MLOps, API, Database)
 
 Proyek ini memiliki beberapa layanan backend utama:
 **Airflow, MLflow, PostgreSQL, FastAPI, dll.**
@@ -240,7 +240,7 @@ Proyek ini memiliki beberapa layanan backend utama:
 
 
 
-## 5️⃣ Jalankan Frontend (Dashboard, Prediction App, Chatbot)
+## 8️⃣ Jalankan Frontend (Dashboard, Prediction App, Chatbot)
 
 Frontend (Streamlit / WebApp) berada pada file terpisah, sehingga anda harus menjalankan docker compose dengan nama file `docker-compose-frontend.yml`.:
 
