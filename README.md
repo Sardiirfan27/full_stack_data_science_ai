@@ -9,8 +9,12 @@ Project ini dibuat untuk **mensimulasikan Full Stack Data Science dan AI** pada 
 
 * Membangun database dan Data Warehouse
 * ETL
-* Exploratory Data Analysis
-* Feauture Engineering, Machine Learning & MLOps
+* Churn Prediction and Analysis:
+   * Exploratory Data Analysis
+   * Data Preprocessing & Feature Engineering
+   * Machine Learning (XGBoost) + Hyperparameter tuning using Bayesian Search Optimization
+   * Explainable AI (SHAP)
+* MLOps
 * Otomatisasi ETL dan MLOps
 * API untuk inference
 * Web app untuk dashboard, prediksi churn, dan AI chatbot
