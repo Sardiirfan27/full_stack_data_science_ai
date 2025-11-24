@@ -13,7 +13,6 @@ Project ini dibuat untuk **mensimulasikan Full Stack Data Science dan AI** pada 
    * Data Preprocessing & Feature Engineering
    * Machine Learning (XGBoost) + Hyperparameter tuning using Bayesian Search Optimization
    * Explainable AI (SHAP)
-* MLOps
 * Otomatisasi ETL dan MLOps
 * Pembuatan API untuk Model Inference yang di lengkapi dengan:
   * Input Validation,
