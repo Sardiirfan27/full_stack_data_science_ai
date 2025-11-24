@@ -16,7 +16,7 @@ Project ini dibuat untuk **mensimulasikan Full Stack Data Science dan AI** pada 
    * Explainable AI (SHAP)
 * MLOps
 * Otomatisasi ETL dan MLOps
-* API untuk inference
+* Pembuatan API untuk Model Inference yang di lengkapi dengan Input Validation, API Key dan Rate Limit untuk keamanan dan menjaga performa server, dan Caching untuk mempercepat proses prediksi.
 * Web App:
   *   Dashboard dan Otomatisasi Pembuatan Chart dan Insight dengan LLM/Generative AI
   *   Prediksi Churn berdasarkan input manual dan file CSV
