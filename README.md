@@ -19,7 +19,7 @@ Project ini dibuat untuk **mensimulasikan Full Stack Data Science dan AI** pada 
   * API Key dan Rate Limit untuk keamanan dan menjaga performa server
   * Caching untuk mempercepat proses prediksi.
 * Web App:
-  *   Dashboard dan Otomatisasi Pembuatan Chart dan Insight dengan LLM/Generative AI
+  *   Dashboard dan AI Agent untuk Otomatisasi Pembuatan Chart dan Insight dengan LLM/Generative AI
   *   Prediksi Churn berdasarkan input manual dan file CSV
   *   AI Chatbot dengan RAG untuk memberikan informasi paket internet dan harganya.
 * Model Deployment (Optional): Model yang telah selesai di training di simpan ke Google Cloud Storage, kemudian Deploy API dan Web App ke Google Cloud Run menggunakan Docker.
