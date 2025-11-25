@@ -1,5 +1,5 @@
 import streamlit as st
-from view.chatbot_logic import load_collection, retrieve_context, GEMINI_MODEL, API_KEY
+from view.chatbot_logic import load_collection,retrieve_context, GEMINI_MODEL, API_KEY
 #import google.generativeai as genai
 from google import genai
 from google.genai import types 
@@ -85,8 +85,13 @@ def render():
     flex = st.container(key="chatbot_buttons", horizontal=True)
     button1 = flex.button("🔄 Reload Knowledge", )
     botton2 = flex.button("🗑️ Hapus Riwayat Chat")
-    if button1:
+    if button1: 
+        # Hapus semua dokumen yang ada di koleksi ChromaDB
+        telco_collection = load_collection()
+        telco_collection.delete(ids=telco_collection.get()['ids'])
+        # Clear cache dan reload koleksi
         load_collection.cache_clear()
+        # Panggil load_collection() lagi. Karena count=0, dia akan menjalankan seed_collection
         load_collection()
         st.session_state.messages = []
         st.success("Knowledge base berhasil direload! Riwayat chat dikosongkan.")

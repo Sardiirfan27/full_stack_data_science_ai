@@ -8,6 +8,7 @@ from functools import lru_cache
 from google.genai import types
 import logging
 import time
+import pandas as pd
 from pathlib import Path
 import json
 
@@ -21,7 +22,7 @@ if not API_KEY:
     raise ValueError("GEMINI_API_KEY tidak ditemukan.")
 
 client = genai.Client(api_key=API_KEY)
-GEMINI_MODEL = "gemini-2.5-flash"
+GEMINI_MODEL = "gemini-2.5-flash-lite"
 EMBED_MODEL = "models/text-embedding-004"
 COLLECTION_NAME = "telco_collection_v2_optimized" # Ganti nama koleksi
 
@@ -36,8 +37,21 @@ logging.basicConfig(
 # Implementasi Batching dan Optimasi Embedding Function
 class GeminiEmbeddingFunction(embedding_functions.EmbeddingFunction):
     """
-    Fungsi embedding kustom dengan Batching untuk kecepatan
-    dan Exponential Backoff untuk keandalan.
+    Fungsi embedding kustom yang dirancang untuk berinteraksi dengan 
+    Google Gemini API melalui client yang disediakan.
+
+    Kelas ini mengimplementasikan teknik optimasi penting:
+    1. Batching: Mengirim beberapa dokumen sekaligus untuk meningkatkan kecepatan 
+       dan mengurangi overhead jaringan.
+    2. Exponential Backoff: Menerapkan logika coba ulang dengan jeda waktu yang 
+       terus meningkat untuk mengatasi error API sementara (seperti rate limiting),
+       sehingga meningkatkan keandalan.
+
+    Atribut:
+        client (google.genai.Client): Klien Gemini API yang sudah terautentikasi.
+        model (str): Nama model embedding yang digunakan (misalnya, "models/text-embedding-004").
+        batch_size (int): Jumlah maksimum dokumen yang diproses dalam satu panggilan API.
+                          (Default: 64).
     """
     def __init__(self, client, model):
         self.client = client
@@ -67,7 +81,7 @@ class GeminiEmbeddingFunction(embedding_functions.EmbeddingFunction):
                     for embedding in res.embeddings:
                         vectors.append(np.array(embedding.values))
                     
-                    logging.info(f"Berhasil meng-*embed* batch {i//self.batch_size + 1}/{len(texts)//self.batch_size + 1}")
+                    logging.info(f"Berhasil embed batch {i//self.batch_size + 1}/{len(texts)//self.batch_size + 1}")
                     break
                 except Exception as e:
                     logging.warning(f"Embedding batch gagal, retry ({attempt+1}/3)... {e}")
@@ -116,10 +130,11 @@ def load_telco_docs(
                 # 🎯 KUALITAS: Membuat string dokumen yang sangat informatif dan terstruktur.
                 doc_string = f"""
 Nama Paket: {nama}. Jenis Layanan Internet: {tipe_internet}. Kecepatan: {kecepatan} Mbps.
-Biaya Dasar (tanpa add-on): ${biaya_dasar:.2f}. Biaya Add-on: ${data.get("aturan_biaya", {}).get("biaya_addon_usd", 10):.2f}.
-Biaya Total Bulan ke Bulan: ${biaya_final.get("month_to_month", 'N/A')}.
-Biaya Total Kontrak 1 Tahun (Diskon 5%): ${biaya_final.get("one_year", 'N/A')}.
-Biaya Total Kontrak 2 Tahun (Diskon 10%): ${biaya_final.get("two_year", 'N/A')}.
+Biaya Dasar (tanpa add-on): ${biaya_dasar:.2f}. 
+Biaya Add-on: ${data.get("aturan_biaya", {}).get("biaya_addon_usd", 10):.2f}.
+Biaya Total Bulan + 1 add-on ke Bulan: ${biaya_final.get("month_to_month", 'N/A')}.
+Biaya Total Kontrak 1 Tahun + 1 add-on (Diskon 5%): ${(biaya_final.get("one_year", '0')*12)}/tahun atau setara dengan ${biaya_final.get("one_year", 'N/A')}/bulan.
+Biaya Total Kontrak 2 Tahun + 1 add-on (Diskon 10%): ${(biaya_final.get("two_year", 0)*24)}/tahun atau setara dengan ${biaya_final.get("two_year", 'N/A')}/bulan.
 Layanan Tambahan: {', '.join(data.get("layanan_tambahan", []))}.
 """
                 docs_list.append(doc_string.strip())
@@ -134,6 +149,19 @@ Layanan Tambahan: {', '.join(data.get("layanan_tambahan", []))}.
         logging.error(f"File dokumen tidak ditemukan: {json_file}")
         return []
 
+def seed_collection(collection):
+    """Fungsi untuk proses seeding dokumen (memasukkan dokumen ke ChromaDB)."""
+    logging.info("Koleksi kosong, mulai insert dokumen...")
+    docs = load_telco_docs()
+
+    if not docs:
+        logging.error("Dokumen kosong. Chroma tidak bisa dibuat.")
+        return
+
+    ids = [f"doc_{i}" for i in range(len(docs))]
+    collection.add(ids=ids, documents=docs) 
+    logging.info(f"{len(docs)} dokumen berhasil dimasukkan ke Chroma DB.")
+    
 # ===========================
 # Load Chroma Vector Store (Optimasi Caching)
 # ===========================
@@ -147,30 +175,19 @@ def load_collection():
     
     chroma_client = chromadb.PersistentClient(chroma_path)
 
+    # Pastikan koleksi terambil/terbuat
     collection = chroma_client.get_or_create_collection(
         name=COLLECTION_NAME,
-        embedding_function=GeminiEmbeddingFunction(client,model=EMBED_MODEL)
+        embedding_function=GeminiEmbeddingFunction(client,model=EMBED_MODEL) 
     )
 
-    # Jika koleksi kosong → seed pertama kali (akan menggunakan batching)
+    # Jika koleksi kosong → seed pertama kali (atau jika dokumen baru dihapus)
     if collection.count() == 0:
-        logging.info("Koleksi kosong, mulai insert dokumen...")
-        docs = load_telco_docs()
-
-        if not docs:
-            logging.error("Dokumen kosong. Chroma tidak bisa dibuat.")
-            return collection
-
-        ids = [f"doc_{i}" for i in range(len(docs))]
-        # Proses add ini sekarang menggunakan batching di dalam GeminiEmbeddingFunction
-        collection.add(ids=ids, documents=docs) 
-        logging.info(f"{len(docs)} dokumen berhasil dimasukkan ke Chroma DB.")
-
+        seed_collection(collection)
+        
     return collection
-
-
 # ===========================
-# Retrieval (Sudah Cepat)
+# Retrieval 
 # ===========================
 def retrieve_context(collection, query, k=3):
     """Mencari dokumen yang paling relevan."""
@@ -202,11 +219,11 @@ def get_chatbot_response(user_message):
     context = "\n---\n".join(docs)
 
     prompt = f"""
-    Anda adalah AI-NOID Telco Assistant.
-    Jawab secara objektif, ringkas, ramah dan positif.
+    Anda adalah AI-NOID Assistant sebagai CS pintar.
+    Jawab secara objektif, ringkas, ramah dan seperti sales yang menawarkan produk.
     Gunakan informasi dari KONTEKS secara eksklusif dan ringkas.
     Jika user beri sapaan, balas dengan bhs ramah.
-    Jika tidak tahu jawabannya, katakan "Maaf, saya tidak memiliki informasi tersebut."
+    Jika tidak tahu jawabannya, katakan "Maaf, saya tidak memiliki informasi tersebut.
     
 
     ### KONTEKS:
@@ -226,3 +243,15 @@ def get_chatbot_response(user_message):
         time.sleep(1)
 
     return "Maaf, sistem sedang mengalami gangguan. Coba lagi nanti. 🛠️"
+
+
+def check_dataframe_collection():
+    """Fungsi untuk memeriksa hasil koleksi ChromaDB."""
+    sample_data = load_collection().get(include=['documents', 'embeddings'])
+    df = pd.DataFrame({
+        "IDs": sample_data['ids'][:3],
+        "Documents": sample_data['documents'][:3],
+        "Embeddings": [str(emb)[:100] + "..." for emb in sample_data['embeddings'][:3]]  # Truncate embeddings
+    })
+
+    return df

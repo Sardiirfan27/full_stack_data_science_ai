@@ -1,5 +1,5 @@
 import streamlit as st
-from view import dashboard, predict,chatbot_ui
+from view import dashboard, predict,chatbot_ui, kaggle_notebook
 #ignore warnings
 import warnings
 warnings.filterwarnings(
@@ -44,7 +44,10 @@ with st.sidebar:
             st.session_state.page = "predict"
         if st.button("🤖 Telco Chatbot", use_container_width=True):
             st.session_state.page = "chatbot"
+        if st.button("📊 Kaggle Notebook", use_container_width=True):
+            st.session_state.page = "kaggle_notebook"
         st.markdown("---")
+        
 
     # 🔵 Container 3: User Info / Footer
     # footer = st.container()
@@ -63,3 +66,5 @@ elif st.session_state.page == "predict":
     predict.render()
 elif st.session_state.page == "chatbot":
     chatbot_ui.render()
+elif st.session_state.page == "kaggle_notebook":
+    kaggle_notebook.render()

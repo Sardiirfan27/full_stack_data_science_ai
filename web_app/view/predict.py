@@ -69,7 +69,7 @@ def render():
                 if response.status_code == 200:
                     result = response.json()
                     st.success("✅ Prediction Successful!")
-                    st.subheader(f"Predicted Class: **{result['prediction']}**")
+                    st.subheader(f"Predicted Class: **{result['prediction']} ({'No Churn' if result['prediction'] == 0 else 'Churn'})**")
                     st.subheader(f"Churn Probability: {result['probability']*100:.2f}%")
                     st.subheader(f"Churn Risk Level: **{ 'High' if result['probability'] >= 0.75 else 'Medium' if result['probability'] >= 0.5 else 'Low' }**")
                 else:

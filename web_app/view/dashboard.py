@@ -327,24 +327,38 @@ def render():
             col6, col7 = st.columns(2, gap="small")
             with col6:
                 # bar chart: streaming tv
+                column = "StreamingTV"
+                df_group = (
+                    df.groupby([column, "Churn"])
+                    .size()
+                    .reset_index(name="Count")
+                )
                 fig = px.bar(
-                    df,
-                    x="StreamingTV",
+                    df_group,
+                    x=column,
+                    y="Count",
                     color="Churn",
                     barmode="group",
-                    title="Streaming TV Distribution",
+                    title=f"{column} Distribution",
                     color_discrete_map={"Yes": "#ed1f91", "No": "#00FFFF"},
                 )
                 st.plotly_chart(fig, use_container_width=True)
                 
             with col7:
                 # bar chart: streaming movies 
+                column = "StreamingMovies"
+                df_group = (
+                    df.groupby([column, "Churn"])
+                    .size()
+                    .reset_index(name="Count")
+                )
                 fig = px.bar(
-                    df,
-                    x="StreamingMovies",
+                    df_group,
+                    x=column,
+                    y="Count",
                     color="Churn",
                     barmode="group",
-                    title="Streaming Movies Distribution",
+                    title=f"{column} Distribution",
                     color_discrete_map={"Yes": "#ed1f91", "No": "#00FFFF"},
                 )
                 st.plotly_chart(fig, use_container_width=True)
@@ -359,6 +373,7 @@ def render():
                 Berikut adalah contoh prompt yang dapat Anda gunakan:
                 - **"Tampilkan tabel (pandas) jumlah pelanggan berdasarkan Contract dan apakah mereka Churn atau tidak."**
                 - **"Buat bar chart perbandingan jumlah pelanggan churn berdasarkan jenis pembayaran (PaymentMethod)."**
+                - **"Tampilkan bar chart untuk analisis customer churn berdasarkan SeniorCitizen."**
                 - **"Tampilkan pie chart proporsi pelanggan churn vs non-churn."**
                 - **"Hitung jumlah pelanggan churn per Contract dan tampilkan tabel, bar chart dan insight dalam bahasa indonesia."**
                 """
@@ -387,8 +402,8 @@ def render():
                         st.success("✅ Analisis Selesai...")
                         
                         #  Tampilkan Kode yang Dihasilkan (untuk debugging/transparansi)
-                        # with st.expander("Lihat Kode Python yang Dihasilkan"):
-                        #     st.code(python_code, language='python')
+                        with st.expander("Lihat Kode Python yang Dihasilkan"):
+                            st.code(python_code, language='python')
                             
                         try:
                             # Jalankan kode yang sudah bersih

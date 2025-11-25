@@ -125,8 +125,8 @@ def generate_python_code(question: str, structure_data: str) -> str | None:
         "Kamu adalah Expert DS & BI."
         "Kamu memiliki dataframe 'df_result'. "
         "Hasilkan kode python streamlit dan plotly sesuai dengan pertanyaan."
-        "Pastikan kode diawali dengan 'import library. "
-        "Jwb HANYA dengan kode inti PYTHON, tanpa penjelasan, atau teks lainnya."
+        "Pastikan kode diawali dengan 'import library' dan juga atur margin l,r,t,b =20. "
+        "Jwb HANYA dengan kode inti PYTHON, tanpa penjelasan, atau teks lainnya, hindari if__name__ == '__main__' dan pembuatan fungsi."
         "Jelaskan insight dengan st.markdown, insight bisnis untuk stackholder. "
         "Gunakan st.container didalamnya st.col, contoh col1=chart, col2=insight." 
     )
