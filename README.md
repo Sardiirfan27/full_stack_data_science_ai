@@ -7,15 +7,25 @@
 
 Project ini dibuat untuk **mensimulasikan Full Stack Data Science dan AI** pada domain **Industri telekomunikasi**, mulai dari:
 
-* Membangun database dan Data Warehouse
-* ETL
-* Exploratory Data Analysis
-* Feauture Engineering, Machine Learning & MLOps
+* Membangun database, Data Warehouse dan Proses ETL
+* Churn Prediction and Analysis:
+   * Exploratory Data Analysis
+   * Data Preprocessing & Feature Engineering
+   * Machine Learning (XGBoost) + Hyperparameter tuning using Bayesian Search Optimization
+   * Explainable AI (SHAP)
 * Otomatisasi ETL dan MLOps
-* API untuk inference
-* Web app untuk dashboard, prediksi churn, dan AI chatbot
+* Pembuatan API untuk Model Inference yang di lengkapi dengan:
+  * Input Validation,
+  * API Key dan Rate Limit untuk keamanan dan menjaga performa server
+  * Caching untuk mempercepat proses prediksi.
+* Web App:
+  *   Dashboard dan Otomatisasi Pembuatan Chart dan Insight dengan LLM/Generative AI
+  *   Prediksi Churn berdasarkan input manual dan file CSV
+  *   AI Chatbot dengan RAG untuk memberikan informasi paket internet dan harganya.
+* Model Deployment (Optional): Model yang telah selesai di training di simpan ke Google Cloud Storage, kemudian Deploy API dan Web App ke Google Cloud Run menggunakan Docker.
 
-Dataset utama berasal dari [Kaggle](https://www.kaggle.com/code/sardiirfansyah/customer-churn-prediction-analysis), kemudian ditambah dengan beberapa tabel dummy untuk menyerupai kondisi real industri telekomunikasi.
+
+**Demo aplikasi** dan Penjelasannya dapat di akses atau klik pada tautaan berikut: [Demo Aplikasi Data Science/AI](https://www.youtube.com/watch?v=FD1qKWHBNN8)
 
 ---
 
@@ -37,10 +47,10 @@ Dataset utama berasal dari [Kaggle](https://www.kaggle.com/code/sardiirfansyah/c
 | **Database Design (RDBMS)**                        | - Mendesain schema database Telco (customer, contract and internet service, transaction) <br> - Membuat *view churn* dengan aturan: **pelanggan dianggap churn jika tidak melakukan pembayaran selama ≥ 2 bulan** <br>                                                                                                                                                        | Docker, PostgreSQL                                 |
 | **ETL Pipeline**                           | - Extract data dari PostgreSQL <br> - Transform: join tabel, cleaning, data quality check, pengayaan fitur (tenure, payment delay, service type) <br> - Load ke BigQuery sebagai Data Warehouse <br> - Dirancang modular & reusable                                                                                                                                                                                                                      | Python, pandas, BigQuery, Postgres              |
 | **Data Warehouse**                         | - Mengintegrasikan dataset Kaggle dengan data hasil ETL PostgreSQL <br> - Membuat data mart atau tabel untuk keperluan ML & dashboard analitik                                                             | BigQuery                                        |
-| **Orkestrasi (Otomatisasi & Penjadwalan)** | - ETL dijalankan otomatis **setiap 3 bulan** <br> - Setelah ETL selesai, sistem otomatis melakukan: <br> → Preprocessing <br> → Training machine learning model + Hyperparameter tuning <br> → Evaluasi dan promosikan model ke Production (jika **recall** >= 0.8 dan **F1-Score**>=0.6) <br> - Menjalankan pipeline ML end-to-end secara otomatis                                                                                                                         | Airflow, Bash, Python                    |
+| **Orkestrasi (Otomatisasi & Penjadwalan)** | - ETL dijalankan otomatis **setiap 3 bulan** <br> - Setelah ETL selesai, sistem otomatis melakukan: <br> → Preprocessing <br> → Training machine learning model + Hyperparameter tuning <br> → Evaluasi dan promosikan model ke Production (jika **recall** >= 0.8 dan **F1-Score**>=0.6) <br> - Menjalankan pipeline ML end-to-end secara otomatis                                                                                                                         | Airflow, Bash, Python, Redis (CeleryExecutor)                   |
 | **EDA & Machine Learning (Jupyter Notebook)**                 | - Analisis churn: distribusi, service usage, contract terms, billing patterns, tenure, etc. <br> - Preprocessing pipeline: cleaning, encoding, scaling, feature engineering. <br> - Model training menggunakan **XGBoost** <br> - Hyperparameter Tuning: **Bayesian Optimization** + Grid Search <br> - Evaluasi model: precision, recall, F1, Custom Metric <br> - **Explainable AI**: **SHAP**, Permutation Feature Importance | Python, scikit-learn, XGBoost, SHAP, pandas, matplotlib, seaborn, plotly, scipy, numy, statsmodels |
 | **MLOps**                                  | - Script otomatis untuk preprocessing, training, tuning, evaluasi <br> - ML model tracking: metrics, parameters, artifacts <br> - Model registry (staging → production) <br> - Automatic promotion jika model baru lebih baik <br> - Monitoring & reproducibility                                                                                                                                                                                        | MLflow, Airflow, Docker, Scikit-learn, SHAP, Python, XGBoost                          |
-| **Model Serving/API Development**                          | - FastAPI untuk model inference <br> - Mendukung prediksi: **single input** & **batch CSV** <br> - **Caching** untuk response lebih cepat <br> - **API key** untuk keamanan <br> - **Rate limiting** untuk membatasi penggunaan <br> - Logging request & error handling                                                                                                                                                                                  | FastAPI, Uvicorn, Redis (opsional caching)      |
+| **Model Serving/API Development**                          | - FastAPI untuk model inference <br> - Mendukung prediksi: **single input** & **batch CSV** <br> - **Caching** untuk response lebih cepat <br> - **API key** untuk keamanan <br> - **Rate limiting** untuk membatasi penggunaan <br> - Logging request & error handling                                                                                                                                                                                  | FastAPI, Uvicorn, Redis      |
 | **Web App**                                | - **Dashboard** analitik churn, layanan, kontrak, billing, tenure <br> - Halaman **Churn Prediction** (manual input & CSV via API) <br> - **AI Chatbot** untuk informasi paket internet, harga, rekomendasi layanan                                                                                                                                                                                                                                          | Streamlit, Plotly, FastAPI                      |
 | **GenAI Integration**                      | - Menampilkan **chart otomatis**, tabel, dan insight menggunakan **Gemini LLM** <br> - Menghasilkan analisis dataset secara otomatis tanpa query manual <br> - Membantu interpretasi data & anomaly explanation                                                                                                                                                                                                                                          | Gemini API (Generative AI), Python              |
 | **AI Chatbot with RAG**                | - Knowledge base chatbot disimpan di **ChromaDB** <br> - Menggunakan embedding untuk pencarian dokumen <br> - Chatbot memberi jawaban yang relevan berdasarkan konteks layanan Telco <br> - Mendukung history & memory                                                                                                                                                                                                                                   | ChromaDB, LLM with Gemini                     |
@@ -163,19 +173,19 @@ GEMINI_API_KEY=your_gemini_key
 
 ---
 
-## 4️⃣ Jalankan Script untuk Pembuatan Database dan tabel di BigQuery
+## 5️⃣ Jalankan Script untuk Pembuatan Database dan tabel di BigQuery
 
 Sebelum menjalankan docker compose, jalankanlah script berikut untuk membuat db dan table di BigQuery. 
 
 Copy file `gcp_service_key.json` ke folder `db` dan  jalankan script `create_db_bigquery.py`.
 
-## 5️⃣ Jalankan Backend (ETL, MLOps, API, Database)
+## 6️⃣ Jalankan Backend (ETL, MLOps, API, Database)
 
 Berikut versi yang sudah **dirapikan, lebih rapi, dan mudah dibaca** untuk bagian menjalankan backend di README:
 
 ---
 
-## 5️⃣ Jalankan Backend (ETL, MLOps, API, Database)
+## 7️⃣ Jalankan Backend (ETL, MLOps, API, Database)
 
 Proyek ini memiliki beberapa layanan backend utama:
 **Airflow, MLflow, PostgreSQL, FastAPI, dll.**
@@ -233,7 +243,7 @@ Proyek ini memiliki beberapa layanan backend utama:
 
 
 
-## 5️⃣ Jalankan Frontend (Dashboard, Prediction App, Chatbot)
+## 8️⃣ Jalankan Frontend (Dashboard, Prediction App, Chatbot)
 
 Frontend (Streamlit / WebApp) berada pada file terpisah, sehingga anda harus menjalankan docker compose dengan nama file `docker-compose-frontend.yml`.:
 

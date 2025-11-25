@@ -26,7 +26,7 @@ default_args = {
     description="Test DAG for MLflow model promotion",
     default_args=default_args,
     schedule_interval=None,  # manual trigger only
-    start_date=datetime(2025, 10, 30),
+    start_date=datetime(2025, 10, 01),
     catchup=False,
     tags=["ml", "promotion"],
 )
