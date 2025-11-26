@@ -372,7 +372,8 @@ def render():
             st.markdown("""
                 Berikut adalah contoh prompt yang dapat Anda gunakan:
                 - **"Tampilkan tabel (pandas) jumlah pelanggan berdasarkan Contract dan apakah mereka Churn atau tidak."**
-                - **"Buat bar chart perbandingan jumlah pelanggan churn berdasarkan jenis pembayaran (PaymentMethod)."**
+                - **"Segmentasikan pelanggan menjadi 3 kategori. Dari masing masing segmen berikan rekomendasikan jenis penawaran retensi yang paling hemat biaya."**
+                - **"Berdasarkan analisis MRR, Tenure, dan Service Type dari pelanggan, buatlah menjadi 3 segmen (High Value, Medium Value, Low Value). Jelaskan terlebih dahulu ketentuan segmentasinya, kemudian tampilkan tabel, chart dan berikan insight untuk rekomendasikan jenis penawaran retensi yang paling hemat biaya."**
                 - **"Tampilkan bar chart untuk analisis customer churn berdasarkan SeniorCitizen."**
                 - **"Tampilkan pie chart proporsi pelanggan churn vs non-churn."**
                 - **"Hitung jumlah pelanggan churn per Contract dan tampilkan tabel, bar chart dan insight dalam bahasa indonesia."**
@@ -392,7 +393,7 @@ def render():
                 # Menggunakan st.spinner untuk memberikan umpan balik visual
                 with st.spinner("🧠 Sedang Memproses data dan menghasilkan analisa..."):
                         
-                    df_result, python_code = main_analysis_flow(analysis_question)
+                    df_result, python_code,sql_query = main_analysis_flow(analysis_question)
                     if python_code and df_result is not None and not df_result.empty:
                         
                         # Bersihkan kode sekali lagi (meskipun sudah dilakukan di generate_python_chart_code)
@@ -402,7 +403,10 @@ def render():
                         st.success("✅ Analisis Selesai...")
                         
                         #  Tampilkan Kode yang Dihasilkan (untuk debugging/transparansi)
-                        with st.expander("Lihat Kode Python yang Dihasilkan"):
+                        with st.expander("Lihat Kode SQL dan Python yang Dihasilkan"):
+                            st.write("### Kueri SQL yang Dihasilkan:")
+                            st.code(sql_query, language='sql')
+                            st.write("### Kode Python untuk Visualisasi:")
                             st.code(python_code, language='python')
                             
                         try:

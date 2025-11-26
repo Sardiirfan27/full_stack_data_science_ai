@@ -122,7 +122,7 @@ def generate_python_code(question: str, structure_data: str) -> str | None:
     """Meminta Gemini membuat kode Plotly Express berdasarkan pertanyaan dan head DataFrame."""
     
     system_instruction = (
-        "Kamu adalah Expert DS & BI."
+        "Kamu adalah Expert DS & BI di Industri Layanan Telekomunikasi."
         "Kamu memiliki dataframe 'df_result'. "
         "Hasilkan kode python streamlit dan plotly sesuai dengan pertanyaan."
         "Pastikan kode diawali dengan 'import library' dan juga atur margin l,r,t,b =20. "
@@ -192,7 +192,7 @@ def main_analysis_flow(user_question: str) -> tuple[pd.DataFrame | None, str | N
     #5. Panggil fungsi generator kode chart
     python_code = generate_python_code(user_question, prompt_data_context)
     
-    return df_result, python_code
+    return df_result, python_code, sql_query
          
 # --- CONTOH PENGGUNAAN SKRIP (Jalankan ini untuk menguji) ---
 if __name__ == '__main__':
@@ -200,8 +200,11 @@ if __name__ == '__main__':
     # Ganti dengan pertanyaan analisis yang Anda inginkan
     analysis_question = "Hitung jumlah pelanggan berdasarkan jenis kontrak (Contract). Urutkan dari tertinggi ke terendah."
     
-    df_final, chart_code = main_analysis_flow(analysis_question)
+    df_final, chart_code, sql = main_analysis_flow(analysis_question)
     
+    if sql is not None:
+        print("\nKueri SQL yang Dihasilkan:")
+        print(sql)
     if chart_code is not None:
         print("\nHasil kode chart:")
         print(chart_code)

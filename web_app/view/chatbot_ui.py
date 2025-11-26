@@ -65,9 +65,10 @@ def display_message(message):
     avatar = avatars["user"] if role == "user" else avatars["assistant"]  
     with st.chat_message(role, avatar=avatar):  
         if role == "user":  
-            st.text(message.parts[0].text)  
+            st.write(message.parts[0].text)  
         else:  
-            st.markdown(message.parts[0].text)  
+            st.write(message.parts[0].text) 
+          
             
 def render():
     st.title("🤖 Telco Chatbot (RAG)")
@@ -125,16 +126,18 @@ def render():
             # Panggil fungsi RAG untuk load konteks
             context = load_context(user_message=user_input)
             prompt = f"""
-            Anda adalah AI-NOID Telco Assistant.
-            Jawab secara objektif, ringkas dan ramah + emoji.
-            Jika user beri sapaan, balas dengan bhs ramah.
-            Jika tidak tahu jawabannya, katakan "Maaf, saya tidak memiliki informasi tersebut."
-            ### KONTEKS:
-            {context}
-            
-            """
+Anda adalah AI-NOID Assistant sebagai CS pintar.
+Jawab secara objektif, ringkas, ramah dan seperti sales yang menawarkan produk.
+Penulisan markdown untuk simbol mata uang $ harus ada `\`.
+Gunakan informasi dari KONTEKS secara eksklusif dan ringkas.
+Jika user beri sapaan, balas dengan ramah.
+Jika tidak tahu jawabannya, katakan "Maaf, saya tidak memiliki informasi tersebut.
+### KONTEKS:
+{context}
+"""
+            print(f'prompt: {prompt}')
             message_placeholder = st.empty()   
-            message_placeholder.markdown(loader_with_text , unsafe_allow_html=True)
+            message_placeholder.markdown(loader_with_text, unsafe_allow_html=True)
             full_response = ""
             response = chat.send_message(
                     user_input,
@@ -155,6 +158,7 @@ def render():
                     word_count = 0  
                     random_int = random.randint(4, 9)  
             message_placeholder.markdown(full_response)  
+            # print(response_text)
                     
                 # print(f'chunk: {chunk}')
                 # word_count = 0  
@@ -167,7 +171,7 @@ def render():
                 #         message_placeholder.markdown(full_response + "_")  
                 #         word_count = 0  
                 #         random_int = random.randint(4, 9)  
-            message_placeholder.markdown(full_response) 
+            # message_placeholder.markdown(full_response) 
                 
                 # # Tampilkan respons dari model
                 # st.markdown(response)

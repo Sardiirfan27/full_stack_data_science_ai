@@ -133,8 +133,8 @@ Nama Paket: {nama}. Jenis Layanan Internet: {tipe_internet}. Kecepatan: {kecepat
 Biaya Dasar (tanpa add-on): ${biaya_dasar:.2f}. 
 Biaya Add-on: ${data.get("aturan_biaya", {}).get("biaya_addon_usd", 10):.2f}.
 Biaya Total Bulan + 1 add-on ke Bulan: ${biaya_final.get("month_to_month", 'N/A')}.
-Biaya Total Kontrak 1 Tahun + 1 add-on (Diskon 5%): ${(biaya_final.get("one_year", '0')*12)}/tahun atau setara dengan ${biaya_final.get("one_year", 'N/A')}/bulan.
-Biaya Total Kontrak 2 Tahun + 1 add-on (Diskon 10%): ${(biaya_final.get("two_year", 0)*24)}/tahun atau setara dengan ${biaya_final.get("two_year", 'N/A')}/bulan.
+Biaya Total Kontrak 1 Tahun + 1 add-on (Diskon 5%): ${(biaya_final.get("one_year", '0')*12)}/tahun atau ${biaya_final.get("one_year", 'N/A')}/bulan.
+Biaya Total Kontrak 2 Tahun + 1 add-on (Diskon 10%): ${(biaya_final.get("two_year", 0)*24)}/tahun atau ${biaya_final.get("two_year", 'N/A')}/bulan.
 Layanan Tambahan: {', '.join(data.get("layanan_tambahan", []))}.
 """
                 docs_list.append(doc_string.strip())
@@ -184,7 +184,7 @@ def load_collection():
     # Jika koleksi kosong → seed pertama kali (atau jika dokumen baru dihapus)
     if collection.count() == 0:
         seed_collection(collection)
-        
+    #print(f"ChromaDB Collection '{COLLECTION_NAME}' siap dengan {collection.count()} dokumen.")  
     return collection
 # ===========================
 # Retrieval 
@@ -221,6 +221,7 @@ def get_chatbot_response(user_message):
     prompt = f"""
     Anda adalah AI-NOID Assistant sebagai CS pintar.
     Jawab secara objektif, ringkas, ramah dan seperti sales yang menawarkan produk.
+    Penulisan markdown untuksimbol mata uang dollar ($) harus \$ rapi.
     Gunakan informasi dari KONTEKS secara eksklusif dan ringkas.
     Jika user beri sapaan, balas dengan bhs ramah.
     Jika tidak tahu jawabannya, katakan "Maaf, saya tidak memiliki informasi tersebut.
