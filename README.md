@@ -1,6 +1,5 @@
 # 📡 Full Stack Data Science & AI Project for the telecommunications industry
 
-
 ---
 
 ## 🔥 Overview
