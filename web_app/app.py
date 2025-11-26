@@ -9,7 +9,7 @@ warnings.filterwarnings(
 
 # --- Global Style ---
 st.set_page_config(
-    page_title="Telco Churn Dashboard",
+    page_title="Telco Intelligence System",
     page_icon="📊",
     layout="wide"
 )
@@ -28,7 +28,7 @@ with st.sidebar:
     header = st.container()
     with header:
         st.image("https://cdn.dribbble.com/userupload/19805829/file/original-cb925c0b18eb169378d862ac77e7f739.gif", width=1000)
-        st.title("Customer Churn Dashboard")
+        st.title("Telco Intelligence System")
         st.markdown("---")
 
     # 🟣 Container 2: Navigation

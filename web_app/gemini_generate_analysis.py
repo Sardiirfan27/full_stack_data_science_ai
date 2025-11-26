@@ -189,7 +189,7 @@ def main_analysis_flow(user_question: str) -> tuple[pd.DataFrame | None, str | N
     
     prompt_data_context = f"Kolom dan Tipe Data:\n{df_types_str}\n\nContoh Data:\n{df_head_str}"
     
-    #5. Panggil fungsi generator kode chart
+    #Panggil fungsi generator kode chart
     python_code = generate_python_code(user_question, prompt_data_context)
     
     return df_result, python_code, sql_query

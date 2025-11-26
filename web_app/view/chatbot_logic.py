@@ -95,7 +95,7 @@ class GeminiEmbeddingFunction(embedding_functions.EmbeddingFunction):
 
 
 # ===========================
-# Load Knowledge Documents (Tidak Berubah, Tapi Diperkuat Kualitasnya)
+# Load Knowledge Documents 
 # ===========================
 
 BASE_DIR = Path(__file__).resolve().parent
@@ -118,21 +118,21 @@ def load_telco_docs(
         
         docs_list = []
         
-        # Q: Kualitas: Pastikan 'doc_string' padat dan fokus pada inti informasi
+        # Q: Pastikan 'doc_string' padat dan fokus pada inti informasi
         if "paket_dan_biaya" in data and isinstance(data["paket_dan_biaya"], list):
             for paket in data["paket_dan_biaya"]:
                 nama = paket.get("nama_paket", "Paket Tidak Diketahui")
                 tipe_internet = paket.get("internet", "N/A")
                 kecepatan = paket.get("kecepatan_mbps", "N/A")
                 biaya_dasar = paket.get("biaya_dasar_usd", 0.00)
-                biaya_final = paket.get("contoh_perhitungan", {}).get("biaya_final_usd", {})
+                #biaya_final = paket.get("contoh_perhitungan", {}).get("biaya_final_usd", {})
                 
-                # 🎯 KUALITAS: Membuat string dokumen yang sangat informatif dan terstruktur.
+                # Membuat string dokumen yang sangat informatif dan terstruktur.
                 doc_string = f"""
 Nama Paket: {nama}. Jenis Layanan Internet: {tipe_internet}. Kecepatan: {kecepatan} Mbps.
 Biaya Dasar (tanpa add-on): ${biaya_dasar:.2f}. 
 Biaya Add-on: ${data.get("aturan_biaya", {}).get("biaya_addon_usd", 10):.2f}.
-Biaya Total Kontrak Bulanan + 1 add-on: ${(biaya_final.get("month_to_month", 0))}/bulan.
+Biaya Total Kontrak Bulanan + 1 add-on: ${(biaya_dasar+10)}/bulan.
 Biaya Total Kontrak 1 Tahun tanpa add-on (Diskon 5%): ${(biaya_dasar*12) * 0.95}/tahun atau ${biaya_dasar*0.95}/bulan.
 Biaya Total Kontrak 2 tahun tanpa add-on (Diskon 10%): ${(biaya_dasar*24) * 0.90}/2 tahun atau ${biaya_dasar*0.90}/bulan.
 Layanan Tambahan: {', '.join(data.get("layanan_tambahan", []))}.

@@ -5,7 +5,7 @@ import os
 
 
 API_KEY=os.getenv("API_KEY_FASTAPI")
-API_URL = os.getenv("FASTAPI_URL_DOCKER") #st.secrets.get("FASTAPI_URL_DOCKER") # use the URL of the docker container instead of localhost
+API_URL = os.getenv("FASTAPI_URL") #st.secrets.get("FASTAPI_URL_DOCKER") # use the URL of the docker container instead of localhost
 
 def render():
     st.title("🔮 Customer Churn Prediction")
