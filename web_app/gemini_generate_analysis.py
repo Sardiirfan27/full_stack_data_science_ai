@@ -90,7 +90,7 @@ def generate_sql_from_question(schema: str, question: str) -> str | None:
                 temperature=0.0 
             )
         )
-        print(response.text)
+        # print(response.text)
         # Bersihkan output LLM
         return clean_output(response.text)
 

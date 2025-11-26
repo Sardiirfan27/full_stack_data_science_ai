@@ -128,14 +128,14 @@ def render():
             prompt = f"""
 Anda adalah AI-NOID Assistant sebagai CS pintar.
 Jawab secara objektif, ringkas, ramah dan seperti sales yang menawarkan produk.
-Penulisan markdown untuk simbol mata uang $ harus ada `\`.
+Penulisan markdown untuk simbol mata uang dollar ($) harus \$ rapi.
 Gunakan informasi dari KONTEKS secara eksklusif dan ringkas.
 Jika user beri sapaan, balas dengan ramah.
 Jika tidak tahu jawabannya, katakan "Maaf, saya tidak memiliki informasi tersebut.
 ### KONTEKS:
 {context}
 """
-            print(f'prompt: {prompt}')
+            # Tampilkan loading spinner dengan teks
             message_placeholder = st.empty()   
             message_placeholder.markdown(loader_with_text, unsafe_allow_html=True)
             full_response = ""
@@ -158,7 +158,7 @@ Jika tidak tahu jawabannya, katakan "Maaf, saya tidak memiliki informasi tersebu
                     word_count = 0  
                     random_int = random.randint(4, 9)  
             message_placeholder.markdown(full_response)  
-            # print(response_text)
+            print(response_text)
                     
                 # print(f'chunk: {chunk}')
                 # word_count = 0  

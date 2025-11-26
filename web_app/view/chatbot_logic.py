@@ -100,7 +100,7 @@ class GeminiEmbeddingFunction(embedding_functions.EmbeddingFunction):
 
 BASE_DIR = Path(__file__).resolve().parent
 DOCS_BASE = BASE_DIR / "knowledge_docs"
-# print(DOCS_BASE) # Hapus print ini
+
 
 def load_telco_docs(
     json_file=DOCS_BASE / "telco_services.json",
@@ -132,9 +132,9 @@ def load_telco_docs(
 Nama Paket: {nama}. Jenis Layanan Internet: {tipe_internet}. Kecepatan: {kecepatan} Mbps.
 Biaya Dasar (tanpa add-on): ${biaya_dasar:.2f}. 
 Biaya Add-on: ${data.get("aturan_biaya", {}).get("biaya_addon_usd", 10):.2f}.
-Biaya Total Bulan + 1 add-on ke Bulan: ${biaya_final.get("month_to_month", 'N/A')}.
-Biaya Total Kontrak 1 Tahun + 1 add-on (Diskon 5%): ${(biaya_final.get("one_year", '0')*12)}/tahun atau ${biaya_final.get("one_year", 'N/A')}/bulan.
-Biaya Total Kontrak 2 Tahun + 1 add-on (Diskon 10%): ${(biaya_final.get("two_year", 0)*24)}/tahun atau ${biaya_final.get("two_year", 'N/A')}/bulan.
+Biaya Total Kontrak Bulanan + 1 add-on: ${(biaya_final.get("month_to_month", 0))}/bulan.
+Biaya Total Kontrak 1 Tahun tanpa add-on (Diskon 5%): ${(biaya_dasar*12) * 0.95}/tahun atau ${biaya_dasar*0.95}/bulan.
+Biaya Total Kontrak 2 tahun tanpa add-on (Diskon 10%): ${(biaya_dasar*24) * 0.90}/2 tahun atau ${biaya_dasar*0.90}/bulan.
 Layanan Tambahan: {', '.join(data.get("layanan_tambahan", []))}.
 """
                 docs_list.append(doc_string.strip())
