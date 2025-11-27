@@ -92,8 +92,9 @@ def render():
                         ) 
 
     tab1, tab2, tab3 = current_tab # Unpack the tab objects
-   
+    
     with tab1: 
+        tab1=True
         col_filter1, col_filter2 = st.columns(2, gap="small")
         with col_filter1:
             selected_services = st.multiselect("Select Services", ["DSL", "Fiber optic", "No"], 
@@ -226,9 +227,9 @@ def render():
                     margin=dict(t=50, l=0, r=0, b=0)
                 )
 
-                st.plotly_chart(fig7, use_container_width=True)
-                
+                st.plotly_chart(fig7, use_container_width=True)     
     with tab2:
+        tab2=True
         col_filter1, col_filter2 = st.columns(2, gap="small")
         with col_filter1:
             selected_services2 = st.multiselect("Select Services", ["DSL", "Fiber optic", "No"], 
@@ -362,11 +363,9 @@ def render():
                     color_discrete_map={"Yes": "#ed1f91", "No": "#00FFFF"},
                 )
                 st.plotly_chart(fig, use_container_width=True)
-                
     with tab3:
+        tab3=True
         st.subheader("📊 Generate Analysis Using AI")
-        # 🌟 Tambahkan kode ini untuk menyimpan status tab3
-        st.session_state.active_tab = "Generate Analysis" # Index 2 = "Generate Analysis"
         # Expander panduan prompt
         with st.expander("💡 Klik disini untuk melihat contoh prompt"):
             st.markdown("""
@@ -423,7 +422,8 @@ def render():
                             st.warning("⚠️ Kueri SQL berhasil dieksekusi, tetapi data yang dikembalikan kosong. Tidak dapat membuat chart.")
                     else:
                         st.error("❌ Gagal total dalam proses analisis (SQL atau Gemini API error).")
-                        
-if "initial_rerun_done" not in st.session_state:
-   st.session_state.initial_rerun_done = True
-   st.rerun()
+    # Rerun sekali saat pertama kali load untuk memastikan tab aktif tersimpan dengan benar
+    # Karena tab aktif tidak disimpan di session state
+    if "initial_rerun_done" not in st.session_state:
+        st.session_state.initial_rerun_done = True
+        st.rerun()
