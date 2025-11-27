@@ -89,7 +89,7 @@ class GeminiEmbeddingFunction(embedding_functions.EmbeddingFunction):
                     time.sleep(2 ** attempt) 
             else:
                 logging.error(f"Embedding batch gagal total pada indeks {i}.")
-                raise
+                raise Exception("Gagal melakukan embedding setelah 3 percobaan.")
                 
         return vectors
 
