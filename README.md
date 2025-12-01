@@ -4,7 +4,7 @@
 
 ## 🔥 Overview
 
-Proyek ini dikembangkan untuk mensimulasikan **Full-Stack Data Science dan AI** pada domain industri telekomunikasi. Proyek ini dirancang untuk meningkatkan efisiensi operasional, memungkinkan analisis data yang lebih cepat dan intuitif melalui AI Agents, serta meningkatkan kepuasan pelanggan. Proses pengembangan aplikasi ini meliputi:
+Proyek ini dikembangkan untuk mensimulasikan **Full-Stack Data Science dan AI** pada domain industri telekomunikasi yang dapat meningkatkan efisiensi operasional, memungkinkan analisis data yang lebih cepat dan intuitif melalui AI Agents, serta meningkatkan kepuasan pelanggan. Proses pengembangan aplikasi ini meliputi:
 
 * Membangun database, Data Warehouse dan Proses ETL
 * Churn Prediction and Analysis:
