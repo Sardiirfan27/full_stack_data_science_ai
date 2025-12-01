@@ -1,10 +1,10 @@
-# 📡 Full Stack Data Science & AI Project for the telecommunications industry
+# 📡 Telco Intelligence System
 
 ---
 
 ## 🔥 Overview
 
-Project ini dibuat untuk **mensimulasikan Full Stack Data Science dan AI** pada domain **Industri telekomunikasi**, mulai dari:
+Project atau aplikasi ini dibuat untuk **mensimulasikan Full Stack Data Science dan AI** pada domain **Industri telekomunikasi**. Aplikasi ini meningkatkan efisiensi operasional, analisis data yang lebih cepat dan lebih intuitif dengan Agen AI, dan meningkatkan kepuasan pelanggan. Proses pembuatan aplikasi ini meliputi:
 
 * Membangun database, Data Warehouse dan Proses ETL
 * Churn Prediction and Analysis:
