@@ -4,7 +4,7 @@
 
 ## 🔥 Overview
 
-Project atau aplikasi ini dibuat untuk **mensimulasikan Full Stack Data Science dan AI** pada domain **Industri telekomunikasi**. Telco Intelligence System ini sangat berfaat terutama untuk meningkatkan efisiensi operasional, analisis data yang lebih cepat dan lebih intuitif dengan Agen AI, dan meningkatkan kepuasan pelanggan. Proses pembuatan aplikasi ini meliputi:
+Proyek ini dikembangkan untuk mensimulasikan **Full-Stack Data Science dan AI** pada domain industri telekomunikasi. Proyek ini dirancang untuk meningkatkan efisiensi operasional, memungkinkan analisis data yang lebih cepat dan intuitif melalui AI Agents, serta meningkatkan kepuasan pelanggan. Proses pengembangan aplikasi ini meliputi:
 
 * Membangun database, Data Warehouse dan Proses ETL
 * Churn Prediction and Analysis:
