@@ -158,8 +158,7 @@ def generate_python_code(question: str, structure_data: str) -> str | None:
 # -----------------------------------------------------------
 # V. ALUR UTAMA (MAIN FLOW)
 # -----------------------------------------------------------
-
-def main_analysis_flow(user_question: str) -> tuple[pd.DataFrame | None, str | None]:
+def main_analysis_flow(user_question: str) -> tuple[pd.DataFrame | None, str | None, str | None]:
     """Menjalankan seluruh alur analisis dan menghasilkan chart."""
     
     #  Ambil Skema Otomatis
@@ -167,7 +166,7 @@ def main_analysis_flow(user_question: str) -> tuple[pd.DataFrame | None, str | N
     
     if schema_text.startswith("ERROR_SCHEMA"):
         print(schema_text)
-        return None, None
+        return None, None, None
 
     # Generasi SQL oleh Gemini
     print(f"\n🧠 Pertanyaan: {user_question}")
@@ -175,13 +174,13 @@ def main_analysis_flow(user_question: str) -> tuple[pd.DataFrame | None, str | N
     
     if not sql_query:
         print("\n❌ Gagal membuat kueri SQL.")
-        return None, None
+        return None, None, None
     
     # Eksekusi Kueri
     df_result = execute_bigquery_query(sql_query)
     if df_result.empty:
         print("\n⚠️ Hasil kosong dikembalikan dari BigQuery.")
-        return None, None
+        return None, None, None
     
     # Dapatkan 5 baris pertama data sebagai string (untuk konteks LLM)
     df_head_str = df_result.head().to_markdown(index=False)
