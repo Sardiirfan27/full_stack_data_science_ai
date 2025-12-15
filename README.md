@@ -24,7 +24,9 @@ Proyek ini dikembangkan untuk mensimulasikan **Full-Stack Data Science dan AI** 
 * Model Deployment (Optional): Model yang telah selesai di training di simpan ke Google Cloud Storage, kemudian Deploy API dan Web App ke Google Cloud Run menggunakan Docker.
 
 
-**Demo aplikasi** dan Penjelasannya dapat di akses atau klik pada tautaan berikut: [Demo Aplikasi Data Science/AI](https://www.youtube.com/watch?v=FD1qKWHBNN8)
+**Demo aplikasi** dan Penjelasannya dapat di akses atau klik pada tautaan berikut: 
+- [Demo 1: Aplikasi Data Science/AI](https://www.youtube.com/watch?v=FD1qKWHBNN8)
+- [Demo 2: Aplikasi Data Science/AI (Updated)](https://www.linkedin.com/posts/sirfansyah_ai-google-bigquery-activity-7399686967388647425-tgrJ?utm_source=share&utm_medium=member_desktop&rcm=ACoAAAuRZgcB6R7kbY-jthEZ5Q5YsCY50B4x7ws)
 
 ---
 
