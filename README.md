@@ -80,7 +80,7 @@ Namun, untuk pengalaman **interaktif dan visualisasi penuh**, saya merekomendasi
 
 ### 💡 Tips:
 
-* Jika membuka di GitHub, notebook akan terlihat **plain** karena styling HTML/CSS tidak sepenuhnya tampil.
+* Jika membuka di GitHub, notebook akan terlihat **polos** karena styling HTML/CSS tidak sepenuhnya tampil.
 * Untuk pengalaman terbaik, buka di Kaggle agar **dashboard, visualisasi interaktif, dan layout rapi** bisa dinikmati.
 
 ---
