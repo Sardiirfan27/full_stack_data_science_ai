@@ -28,6 +28,8 @@ Proyek ini dikembangkan untuk mensimulasikan **Full-Stack Data Science dan AI** 
 - [Demo 1: Aplikasi Data Science/AI](https://www.youtube.com/watch?v=FD1qKWHBNN8)
 - [Demo 2: Aplikasi Data Science/AI (Updated)](https://www.linkedin.com/posts/sirfansyah_ai-google-bigquery-activity-7399686967388647425-tgrJ?utm_source=share&utm_medium=member_desktop&rcm=ACoAAAuRZgcB6R7kbY-jthEZ5Q5YsCY50B4x7ws)
 
+**Analisis dan Insight**:
+🔗 [Customer Churn Prediction & Analysis Notebook](https://www.kaggle.com/code/sardiirfansyah/customer-churn-prediction-analysis)
 ---
 
 ## 🧩  Workflow Diagram
