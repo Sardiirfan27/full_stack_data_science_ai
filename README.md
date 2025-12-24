@@ -30,6 +30,7 @@ Proyek ini dikembangkan untuk mensimulasikan **Full-Stack Data Science dan AI** 
 
 **Analisis dan Insight**:
 🔗 [Customer Churn Prediction & Analysis Notebook](https://www.kaggle.com/code/sardiirfansyah/customer-churn-prediction-analysis)
+
 ---
 
 ## 🧩  Workflow Diagram
